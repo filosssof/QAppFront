@@ -1,0 +1,18 @@
+{
+  "generator-ngx-rocket": {
+    "version": "2.4.0",
+    "props": {
+      "appName": "hz_front",
+      "target": [
+        "web"
+      ],
+      "pwa": true,
+      "ui": "material",
+      "auth": true,
+      "projectName": "hz-front",
+      "packageManager": "npm",
+      "mobile": [],
+      "webview": []
+    }
+  }
+}
