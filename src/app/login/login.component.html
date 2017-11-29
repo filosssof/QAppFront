@@ -42,8 +42,14 @@
             <span translate>Login</span>
           </button>
         </div>
+
       </form>
+      <div fxLayout="column">
+        <button style="font-size:24px" (click)="signInWithGoogle()"><i class="fa fa-google"></i></button>
+        <button style="font-size:24px" (click)="signInWithFB()"><i class="fa fa-facebook"></i></button>
+      </div>
     </mat-card>
+
   </div>
 </div>
 
