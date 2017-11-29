@@ -41,7 +41,6 @@ export class LoginComponent implements OnInit {
 
     login() {
         this.isLoading = true;
-        console.log('Why????');
         this.authenticationService.login(this.loginForm.value)
             .pipe(finalize(() => {
                 this.loginForm.markAsPristine();
@@ -61,8 +60,19 @@ export class LoginComponent implements OnInit {
     }
 
     signInWithFB(): void {
-        this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then(socialUser =>{
-            console.log(socialUser.authToken);
+        this.isLoading = true;
+        this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then(socialUser => {
+            this.authenticationService.loginFacebook(socialUser.authToken).pipe(finalize(() => {
+                this.loginForm.markAsPristine();
+                this.isLoading = false;
+            }))
+                .subscribe(credentials => {
+                    log.debug(`${credentials.username} successfully logged in`);
+                    this.router.navigate(['/'], {replaceUrl: true});
+                }, error => {
+                    log.debug(`Login error: ${error}`);
+                    this.error = error;
+                });
         });
 
     }

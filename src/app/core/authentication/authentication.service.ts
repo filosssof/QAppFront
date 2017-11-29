@@ -24,7 +24,7 @@ const credentialsKey = 'credentials';
 export class AuthenticationService {
 
     private _credentials: Credentials;
-
+    private baseURL = 'http://localhost:8080';
 
     constructor(private $httpClient: HttpClient) {
         this._credentials = JSON.parse(sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey));
@@ -36,8 +36,7 @@ export class AuthenticationService {
      * @return {Observable<Credentials>} The user credentials.
      */
     login(context: LoginContext): Observable<Credentials> {
-        const baseURL = 'http://localhost:8080';
-        return this.$httpClient.post<Credentials>(baseURL + '/user/login', JSON.stringify(context))
+        return this.$httpClient.post<Credentials>(this.baseURL + '/user/login', JSON.stringify(context))
             .map((data: Credentials) => {
                 console.log(data);
                 this.setCredentials(data, context.remember);
@@ -46,6 +45,17 @@ export class AuthenticationService {
                 console.error(err.message);
             });
 
+    }
+
+    loginFacebook(authToken: string): Observable<Credentials> {
+        return this.$httpClient.post<Credentials>(this.baseURL + '/oauth/facebook/login', authToken)
+            .map((data: Credentials) => {
+                console.log(data);
+                this.setCredentials(data, true);
+                return data;
+            }, (err: HttpErrorResponse) => {
+                console.error(err.message);
+            });
     }
 
     /**
