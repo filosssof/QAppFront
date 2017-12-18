@@ -15,12 +15,12 @@ import {CoreModule} from './core/core.module';
 import {SharedModule} from './shared/shared.module';
 import {HomeModule} from './home/home.module';
 import {AboutModule} from './about/about.module';
-import {LoginModule} from './login/login.module';
 
 import { SocialLoginModule } from 'angular4-social-login';
 import {GoogleLoginProvider, FacebookLoginProvider, AuthServiceConfig} from 'angular4-social-login';
+import {QuestionModule} from "./question/question.module";
 
-let config = new AuthServiceConfig([
+const config = new AuthServiceConfig([
     // {
     //     id: GoogleLoginProvider.PROVIDER_ID,
     //     provider: new GoogleLoginProvider('453019100708-1aqms6ktq76445rbsnv8i7fcouetjqr0.apps.googleusercontent.com')
@@ -48,15 +48,15 @@ export function provideConfig() {
         CoreModule,
         SharedModule,
         HomeModule,
+        QuestionModule,
         AboutModule,
-        LoginModule,
         SocialLoginModule,
         AppRoutingModule
     ],
     declarations: [AppComponent],
     providers: [{
         provide: AuthServiceConfig,
-        useFactory: provideConfig
+        useFactory: provideConfig,
     }],
     bootstrap: [AppComponent]
 })

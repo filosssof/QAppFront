@@ -9,6 +9,7 @@
       "outDir": "dist",
       "assets": [
         "assets",
+        "assets/icons",
         "favicon.ico",
         "manifest.json",
         "robots.txt"

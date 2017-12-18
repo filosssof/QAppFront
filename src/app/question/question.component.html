@@ -1,0 +1,10 @@
+<div class="container">
+    <mat-card *ngIf="question">
+        <h1>
+            <mat-card-title>{{question.title}}</mat-card-title>
+        </h1>
+        <mat-card-content>
+            <span translate>{{question.content}}</span>
+        </mat-card-content>
+    </mat-card>
+</div>

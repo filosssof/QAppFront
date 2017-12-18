@@ -1,14 +1,16 @@
 <div class="container">
-  <mat-card>
-    <p>
-      <img class="logo" src="assets/ngx-rocket-logo.png" alt="angular logo"/>
-    </p>
-    <mat-card-content>
-      <mat-card-title translate>Hello world !</mat-card-title>
-      <mat-card-subtitle>
-        <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
-        <q [hidden]="isLoading">{{quote}}</q>
-      </mat-card-subtitle>
-    </mat-card-content>
-  </mat-card>
+    <mat-card>
+        <mat-card-content *ngFor="let question of questions">
+            <mat-card-title>
+                <a mat-list-item routerLink="/question/{{question.id}}" routerLinkActive="active">
+                    {{question.title}} ({{question.rank}})
+                </a>
+            </mat-card-title>
+            <mat-card-subtitle>
+                <app-loader [isLoading]="isLoading" size="1.5"></app-loader>
+                <q [hidden]="isLoading">{{question.content}}</q>
+            </mat-card-subtitle>
+            <mat-card-footer>{{question.createdBy.name}} ({{question.createdBy.karma}})</mat-card-footer>
+        </mat-card-content>
+    </mat-card>
 </div>

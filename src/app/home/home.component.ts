@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 
-import { QuoteService } from './quote.service';
+import {PageableQuestion, QuestionFilter, QuestionService} from '../question/question.service';
+import {Question} from '../question/question.service';
 
 @Component({
   selector: 'app-home',
@@ -10,16 +11,22 @@ import { QuoteService } from './quote.service';
 })
 export class HomeComponent implements OnInit {
 
-  quote: string;
   isLoading: boolean;
 
-  constructor(private quoteService: QuoteService) {}
+  questions: Question[];
+
+  filter: QuestionFilter;
+
+  constructor(private questionService: QuestionService) {}
 
   ngOnInit() {
     this.isLoading = true;
-    this.quoteService.getRandomQuote({ category: 'dev' })
+    this.questionService.getListOfQuestions(this.filter)
       .pipe(finalize(() => { this.isLoading = false; }))
-      .subscribe((quote: string) => { this.quote = quote; });
+      .subscribe((pageableQuestions: PageableQuestion) => { this.questions = pageableQuestions.content;
+      });
+
+
   }
 
 }

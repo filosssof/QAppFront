@@ -50,7 +50,6 @@ export class AuthenticationService {
     loginFacebook(authToken: string): Observable<Credentials> {
         return this.$httpClient.post<Credentials>(this.baseURL + '/oauth/facebook/login', authToken)
             .map((data: Credentials) => {
-                console.log(data);
                 this.setCredentials(data, true);
                 return data;
             }, (err: HttpErrorResponse) => {

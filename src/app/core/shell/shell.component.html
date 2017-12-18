@@ -5,7 +5,7 @@
       <mat-toolbar color="primary">
         <span translate>APP_NAME</span>
         <div fxFlex></div>
-        <div>
+        <div *ngIf="isAuthenticated()">
           <button mat-icon-button [matMenuTriggerFor]="userMenu" translate>
             <mat-icon>person</mat-icon>
           </button>
@@ -17,6 +17,16 @@
               <mat-divider></mat-divider>
             </mat-list>
             <button mat-menu-item (click)="logout()" translate>Logout</button>
+          </mat-menu>
+        </div>
+
+        <div *ngIf="!isAuthenticated()">
+          <button mat-icon-button [matMenuTriggerFor]="loginMenu" translate>
+            <mat-icon>transfer_within_a_station</mat-icon>
+          </button>
+          <mat-menu #loginMenu="matMenu">
+            <button style="font-size:24px" (click)="signInWithGoogle()"><i class="fa fa-google"></i></button>
+            <button style="font-size:24px" (click)="signInWithFB()"><i class="fa fa-facebook"></i></button>
           </mat-menu>
         </div>
         <div>
