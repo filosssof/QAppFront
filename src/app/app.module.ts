@@ -18,7 +18,8 @@ import {AboutModule} from './about/about.module';
 
 import { SocialLoginModule } from 'angular4-social-login';
 import {GoogleLoginProvider, FacebookLoginProvider, AuthServiceConfig} from 'angular4-social-login';
-import {QuestionModule} from "./question/question.module";
+import {QuestionModule} from './question/question.module';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 const config = new AuthServiceConfig([
     // {
@@ -43,6 +44,7 @@ export function provideConfig() {
         HttpModule,
         HttpClientModule,
         TranslateModule.forRoot(),
+        NgbModule.forRoot(),
         BrowserAnimationsModule,
         MaterialModule,
         CoreModule,

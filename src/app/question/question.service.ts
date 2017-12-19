@@ -55,8 +55,6 @@ export interface PageableQuestion {
     totalElements: number;
     totalPages: number;
     sort: Sort;
-
-
 }
 
 export interface Sort {

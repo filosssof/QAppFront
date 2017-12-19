@@ -1,10 +1,28 @@
 <div class="container">
     <mat-card *ngIf="question">
+        <mat-card-header class="question-title">
+            <img mat-card-avatar src="{{getImgSrcByAuthor(question.createdBy)}}" /> {{question.createdBy.name}}
+            {{question.createdBy.karma}}<i class="material-icons">star</i>
+
+        </mat-card-header>
         <h1>
             <mat-card-title>{{question.title}}</mat-card-title>
         </h1>
         <mat-card-content>
-            <span translate>{{question.content}}</span>
+            <div>
+                <mat-card-actions>
+                    <button mat-button *ngIf="isAuthenticated()"><i class="material-icons">arrow_downward</i></button>
+                    {{question.rank}}
+                    <button mat-button *ngIf="isAuthenticated()"><i class="material-icons">arrow_upward</i></button>
+                </mat-card-actions>
+            </div>
+            <div><span translate>{{question.content}}</span></div>
+
         </mat-card-content>
+        <mat-card-footer>
+        </mat-card-footer>
+        <mat-card-actions>
+            <button mat-button *ngIf="isAuthenticated()"><i class="material-icons">forum</i></button>
+        </mat-card-actions>
     </mat-card>
 </div>

@@ -8,6 +8,7 @@ import {MaterialModule} from '../material.module';
 import {QuestionService} from './question.service';
 import {QuestionComponent} from './question.component';
 import {QuestionRoutingModule} from './question-routing.module';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {QuestionRoutingModule} from './question-routing.module';
         SharedModule,
         FlexLayoutModule,
         MaterialModule,
-        QuestionRoutingModule
+        QuestionRoutingModule,
+        NgbModule.forRoot()
     ],
     declarations: [
         QuestionComponent

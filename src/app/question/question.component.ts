@@ -1,7 +1,8 @@
-import {PageableQuestion, Question, QuestionFilter, QuestionService} from './question.service';
+import {Author, PageableQuestion, Question, QuestionFilter, QuestionService} from './question.service';
 import {Component, OnInit} from '@angular/core';
 import {finalize} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
+import {AuthenticationService} from "../core/authentication/authentication.service";
 
 @Component({
     selector: 'app-home',
@@ -18,7 +19,14 @@ export class QuestionComponent implements OnInit {
 
     filter: QuestionFilter;
 
-    constructor(private questionService: QuestionService, private route: ActivatedRoute) {
+    constructor(private questionService: QuestionService, private route: ActivatedRoute, private authenticationService: AuthenticationService) {
+    }
+
+    public getImgSrcByAuthor(author: Author) {
+        const src = 'https://graph.facebook.com/{facebookId}/picture?type=square'
+            .replace('{facebookId}', author.facebookId);
+        console.log(author);
+        return src;
     }
 
     ngOnInit() {
@@ -26,7 +34,7 @@ export class QuestionComponent implements OnInit {
         this.route.params.subscribe(params => {
             if (params['id']) {
                 this.questionService.getQuestionById(params['id']).pipe(finalize(() => {
-                    this.isLoading = false
+                    this.isLoading = false;
                 }))
                     .subscribe((question: Question) => {
                         this.question = question;
@@ -43,6 +51,10 @@ export class QuestionComponent implements OnInit {
             }
         });
 
+    }
+
+    isAuthenticated(): boolean {
+        return this.authenticationService.isAuthenticated();
     }
 
 }
