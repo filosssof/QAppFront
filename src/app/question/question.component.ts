@@ -1,8 +1,9 @@
-import {Author, PageableQuestion, Question, QuestionFilter, QuestionService} from './question.service';
 import {Component, OnInit} from '@angular/core';
 import {finalize} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
-import {AuthenticationService} from "../core/authentication/authentication.service";
+import {AuthenticationService} from '../core/authentication/authentication.service';
+import {Author, PageableQuestion, Question} from '../shared/models/models.interfaces';
+import {QuestionFilter, QuestionService} from './question.service';
 
 @Component({
     selector: 'app-home',
@@ -19,7 +20,9 @@ export class QuestionComponent implements OnInit {
 
     filter: QuestionFilter;
 
-    constructor(private questionService: QuestionService, private route: ActivatedRoute, private authenticationService: AuthenticationService) {
+    constructor(private questionService: QuestionService,
+                private route: ActivatedRoute,
+                private authenticationService: AuthenticationService) {
     }
 
     public getImgSrcByAuthor(author: Author) {
