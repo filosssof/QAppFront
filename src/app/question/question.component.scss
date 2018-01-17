@@ -3,6 +3,41 @@
   padding: 1rem;
 }
 
-.question-title .material-icons {
-  font-size: 16px;
+.question {
+  .mat-card-header {
+    display: inline-table;
+
+    .date {
+      clear: both;
+    }
+
+    .material-icons {
+      font-size: 16px;
+      line-height: 40px;
+    }
+  }
+}
+
+.answers {
+  text-align: left;
+
+  .mat-card-header {
+    font-size: 12px;
+    line-height: 20px;
+
+    .material-icons {
+      font-size: 12px;
+      line-height: 20px;
+    }
+  }
+
+  .mat-card-content {
+    margin-top: 10px;
+  }
+
+  .mat-card-avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 30px;
+  }
 }

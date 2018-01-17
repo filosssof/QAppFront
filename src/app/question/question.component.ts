@@ -1,9 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {finalize} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
 import {AuthenticationService} from '../core/authentication/authentication.service';
-import {Author, PageableQuestion, Question} from '../shared/models/models.interfaces';
-import {QuestionFilter, QuestionService} from './question.service';
+import {Answer, Author, PageableAnswer, PageableQuestion, Question, QuestionFilter} from '../shared/models/models.interfaces';
+import {AnswerDialogComponent} from '../answer/answer-dialog.component';
+import {QuestionService} from './question.service';
+import {MatDialog} from '@angular/material';
 
 @Component({
     selector: 'app-home',
@@ -18,17 +20,21 @@ export class QuestionComponent implements OnInit {
 
     question: Question;
 
+    public answers: Answer[];
+
     filter: QuestionFilter;
+    changeDetectorRefs: ChangeDetectorRef[] = [];
 
     constructor(private questionService: QuestionService,
                 private route: ActivatedRoute,
-                private authenticationService: AuthenticationService) {
+                private authenticationService: AuthenticationService,
+                public dialog: MatDialog) {
+
     }
 
     public getImgSrcByAuthor(author: Author) {
         const src = 'https://graph.facebook.com/{facebookId}/picture?type=square'
-            .replace('{facebookId}', author.facebookId);
-        console.log(author);
+            .replace('{facebookId}', author.facebookId); // TODO verify number of calls
         return src;
     }
 
@@ -36,12 +42,8 @@ export class QuestionComponent implements OnInit {
         this.isLoading = true;
         this.route.params.subscribe(params => {
             if (params['id']) {
-                this.questionService.getQuestionById(params['id']).pipe(finalize(() => {
-                    this.isLoading = false;
-                }))
-                    .subscribe((question: Question) => {
-                        this.question = question;
-                    });
+                this.populateQuestion(params['id']);
+                this.populateAnswers(params['id']);
             } else {
                 this.questionService.getListOfQuestions(this.filter)
                     .pipe(finalize(() => {
@@ -56,8 +58,37 @@ export class QuestionComponent implements OnInit {
 
     }
 
+    private populateQuestion(id: number) {
+        this.questionService.getQuestionById(id).pipe(finalize(() => {
+            this.isLoading = false;
+        }))
+            .subscribe((question: Question) => {
+                this.question = question;
+            });
+    }
+
+    populateAnswers(id: number) {
+        this.questionService.getAnswersByQuestionId(id).subscribe((answers: PageableAnswer) => {
+            this.answers = answers.content;
+            this.isLoading = false;
+        });
+    }
+
+
+    openAnswerDialog(): void {
+        this.dialog.open(AnswerDialogComponent, {
+            width: '350px',
+            data: {questionId: this.question.id, answers: this.answers, loading: this.isLoading}
+        });
+    }
+
     isAuthenticated(): boolean {
         return this.authenticationService.isAuthenticated();
+    }
+
+    tick() {
+        this.changeDetectorRefs
+            .forEach((ref) => ref.detectChanges());
     }
 
 }

@@ -2,7 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import {TranslateModule} from '@ngx-translate/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -16,10 +16,14 @@ import {SharedModule} from './shared/shared.module';
 import {HomeModule} from './home/home.module';
 import {AboutModule} from './about/about.module';
 
-import { SocialLoginModule } from 'angular4-social-login';
+import {SocialLoginModule} from 'angular4-social-login';
 import {GoogleLoginProvider, FacebookLoginProvider, AuthServiceConfig} from 'angular4-social-login';
 import {QuestionModule} from './question/question.module';
+import {AnswerModule} from './answer/answer.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {MatInputModule} from '@angular/material';
+import {JWTInterceptor} from './core/authentication/jwt-interceptor';
+import {AnswerDialogComponent} from "./answer/answer-dialog.component";
 
 const config = new AuthServiceConfig([
     // {
@@ -41,6 +45,7 @@ export function provideConfig() {
     imports: [
         BrowserModule,
         FormsModule,
+        MatInputModule,
         HttpModule,
         HttpClientModule,
         TranslateModule.forRoot(),
@@ -51,6 +56,7 @@ export function provideConfig() {
         SharedModule,
         HomeModule,
         QuestionModule,
+        AnswerModule,
         AboutModule,
         SocialLoginModule,
         AppRoutingModule
@@ -58,9 +64,15 @@ export function provideConfig() {
     declarations: [AppComponent],
     providers: [{
         provide: AuthServiceConfig,
-        useFactory: provideConfig,
+        useFactory: provideConfig
+    }, {
+        provide: HTTP_INTERCEPTORS,
+        useClass: JWTInterceptor,
+        multi: true
     }],
-    bootstrap: [AppComponent]
+    entryComponents: [AnswerDialogComponent],
+bootstrap: [AppComponent]
 })
+
 export class AppModule {
 }

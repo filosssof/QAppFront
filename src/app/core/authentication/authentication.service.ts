@@ -1,18 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-
-export interface Credentials {
-    // Customize received credentials here
-    username: string;
-    token: string;
-}
-
-export interface LoginContext {
-    username: string;
-    password: string;
-    remember?: boolean;
-}
+import {Credentials, LoginContext} from '../../shared/models/models.interfaces';
 
 const credentialsKey = 'credentials';
 

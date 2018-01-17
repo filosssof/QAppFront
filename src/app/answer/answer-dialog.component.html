@@ -1,0 +1,5 @@
+<mat-form-field>
+  <textarea matInput placeholder="Введите ваш ответ" matTextareaAutosize matAutosizeMinRows="1"
+            matAutosizeMaxRows="5"  [(ngModel)] = "answerContent"></textarea>
+</mat-form-field>
+<button mat-button (click)="addAnswer()"><i class="material-icons">add</i></button>

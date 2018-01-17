@@ -9,6 +9,8 @@ import {QuestionService} from './question.service';
 import {QuestionComponent} from './question.component';
 import {QuestionRoutingModule} from './question-routing.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {AnswerModule} from '../answer/answer.module';
+import {AnswerDialogComponent} from '../answer/answer-dialog.component';
 
 
 @NgModule({
@@ -20,6 +22,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
         FlexLayoutModule,
         MaterialModule,
         QuestionRoutingModule,
+        AnswerModule,
         NgbModule.forRoot()
     ],
     declarations: [
@@ -27,6 +30,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     ],
     providers: [
         QuestionService
+    ],
+    entryComponents: [
+        AnswerDialogComponent
     ]
 })
 export class QuestionModule { }
